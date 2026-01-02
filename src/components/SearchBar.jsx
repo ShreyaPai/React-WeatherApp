@@ -6,8 +6,8 @@ export default function SearchBar({ onSearch, initialLoc = "" }) {
   const [searchResults, setSearchResults] = useState([]);
 
   useEffect(() => {
-    const searchLocation = async () => {
-      if (!locationName) return;
+    const searchLocation = setTimeout(async () => {
+      if (!locationName || locationName.length < 3) return;
       try {
         const data = await getLocations(locationName);
         console.log("data :>> ", data);
@@ -16,9 +16,9 @@ export default function SearchBar({ onSearch, initialLoc = "" }) {
         setSearchResults(allMatchingLocations);
       } catch (err) {
         console.log("err :>> ", err);
-      }
-    };
-    searchLocation();
+    }
+     }, 800)
+    return () => clearTimeout(searchLocation);
   }, [locationName]);
 
   const handleLocationNameChange = (event) => {
@@ -35,7 +35,7 @@ export default function SearchBar({ onSearch, initialLoc = "" }) {
     setTimeout(() => {
             handleWeatherDisplay()
 
-        // setSearchResults([])
+        setSearchResults([])
     }, 100 )
     
   }
@@ -53,6 +53,8 @@ export default function SearchBar({ onSearch, initialLoc = "" }) {
           id="visitors"
           placeholder="Search..."
           value={locationName}
+          minLength="3"
+          min="3"
           onChange={handleLocationNameChange}
           className="flex-4 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-2.5 py-2 shadow-xs placeholder:text-body rounded-[1em]"
           required
