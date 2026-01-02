@@ -7,6 +7,11 @@ export default function WeatherCard() {
   const [searchLocation, setSearchLocation] = useState("");
   const [weatherData, setWeatherData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false)
+
+  const errorHandler = () =>{
+    setIsError(true)
+  }
 
   useEffect(() => {
     const showWeather = async () => {
@@ -33,6 +38,7 @@ export default function WeatherCard() {
       } catch (err) {
         console.log(err);
         setIsLoading(false);
+        setIsError(true);
       }
     };
 
@@ -50,8 +56,9 @@ export default function WeatherCard() {
           className="rounded-[1em] p-8 shadow-2xl text-white font-medium
                 bg-linear-to-br from-cyan-500 to-blue-600"
         >
-          <SearchBar onSearch={locationToSearch} initialLoc={ weatherData && '' } />
-          <section>
+          <SearchBar onSearch={locationToSearch} initialLoc={ weatherData && '' } onError={errorHandler} />
+         {
+          !isError && <section>
             {isLoading ? (
               <div role="status">
                 <h3>
@@ -60,11 +67,16 @@ export default function WeatherCard() {
               </div>
             ) : (
               <Temperature
+              onError={errorHandler}
                 currentWeather={weatherData}
                 location={searchLocation}
               />
             )}
           </section>
+         } 
+         {
+          isError && <p>Oops, something went wrong</p>
+         }
         </div>
       </div>
     </>

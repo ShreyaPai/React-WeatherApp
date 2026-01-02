@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getLocations } from "../http/http";
 
-export default function SearchBar({ onSearch, initialLoc = "" }) {
+export default function SearchBar({ onSearch, initialLoc = "", onError }) {
   const [locationName, setLocationName] = useState(initialLoc);
   const [searchResults, setSearchResults] = useState([]);
 
@@ -16,6 +16,7 @@ export default function SearchBar({ onSearch, initialLoc = "" }) {
         setSearchResults(allMatchingLocations);
       } catch (err) {
         console.log("err :>> ", err);
+        onError(err)
       }
     }, 800);
     return () => clearTimeout(searchLocation);
