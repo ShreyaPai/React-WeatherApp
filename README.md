@@ -5,5 +5,5 @@
 
 ## Tech Stack
 - React 18 (Hooks: useState, useEffect)
-- Tailwind CSS (or your styling)
+- Tailwind CSS
 - OpenWeatherMap API
