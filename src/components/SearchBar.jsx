@@ -16,8 +16,8 @@ export default function SearchBar({ onSearch, initialLoc = "" }) {
         setSearchResults(allMatchingLocations);
       } catch (err) {
         console.log("err :>> ", err);
-    }
-     }, 800)
+      }
+    }, 800);
     return () => clearTimeout(searchLocation);
   }, [locationName]);
 
@@ -31,14 +31,13 @@ export default function SearchBar({ onSearch, initialLoc = "" }) {
   };
 
   const handleDropdownSelect = (val) => {
-    setLocationName(val)
+    setLocationName(val);
     setTimeout(() => {
-            handleWeatherDisplay()
+      handleWeatherDisplay();
 
-        setSearchResults([])
-    }, 100 )
-    
-  }
+      setSearchResults([]);
+    }, 100);
+  };
   return (
     <div>
       <label
@@ -79,7 +78,12 @@ export default function SearchBar({ onSearch, initialLoc = "" }) {
                   key={index}
                   className="hover:bg-neutral-tertiary-medium hover:text-heading"
                 >
-                  <a onClick={() => handleDropdownSelect(res.formatted)} className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:underline rounded">{res.formatted}</a>
+                  <a
+                    onClick={() => handleDropdownSelect(res.formatted)}
+                    className="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:underline rounded"
+                  >
+                    {res.formatted}
+                  </a>
                 </li>
               );
             })}
